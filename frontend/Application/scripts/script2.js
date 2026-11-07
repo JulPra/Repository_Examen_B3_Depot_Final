@@ -78,7 +78,7 @@ boutonsReservation.forEach((bouton) => {
         try {
             // Demander la création d'une session Stripe au backend
             const response = await fetch(
-                "http://localhost:3000/api/paiements/checkout",
+                "http://repository-examen-b3-depot-final.onrender.com/api/paiements/checkout",
                 {
                     method: "POST",
                     headers: {
