@@ -1,29 +1,9 @@
+
+const API_URL = "https://repository-examen-b3-depot-final.onrender.com";
+
 const boutonsReservation = document.querySelectorAll(".reservation");
 
-const API_URL = "http://localhost:3000/api";
-
 boutonsReservation.forEach((bouton) => {
-    const carte = bouton.closest(".movie-card");
-
-    // Création du choix du nombre de places
-    let select = carte.querySelector(".nombre-places");
-
-    if (!select) {
-        select = document.createElement("select");
-        select.className = "nombre-places";
-
-        for (let i = 1; i <= 10; i++) {
-            const option = document.createElement("option");
-            option.value = i;
-            option.textContent = `${i} place${i > 1 ? "s" : ""}`;
-            select.appendChild(option);
-        }
-
-        bouton.before(select);
-    }
-
-    const message = carte.querySelector(".message-reservation");
-
     bouton.addEventListener("click", async () => {
         const login = sessionStorage.getItem("login");
 
@@ -33,41 +13,28 @@ boutonsReservation.forEach((bouton) => {
             return;
         }
 
-        const film = carte.querySelector(".movie-title")
+        const carteFilm = bouton.closest(".movie-card");
+        const titreFilm = carteFilm
+            .querySelector(".movie-title")
             .textContent.trim();
 
-        const nombrePlaces = Number(select.value);
+        const message = carteFilm.querySelector(".message-reservation");
 
-        const textePlaces = carte.querySelector(
-            ".movie-places-disponibles"
-        ).textContent;
-
-        const placesDisponibles = parseInt(
-            textePlaces.match(/\d+/)?.[0] ?? "0",
-            10
-        );
-
-        if (nombrePlaces > placesDisponibles) {
-            message.textContent =
-                "Le nombre de places demandé n'est pas disponible.";
-            return;
-        }
-
-        bouton.disabled = true;
         message.textContent = "Préparation du paiement...";
+        bouton.disabled = true;
 
         try {
             const response = await fetch(
-                `${API_URL}/paiements/checkout`,
+                `${API_URL}/api/paiements/checkout`,
                 {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"
                     },
                     body: JSON.stringify({
-                        film,
-                        login,
-                        nombrePlaces
+                        film: titreFilm,
+                        login: login,
+                        nombrePlaces: 1
                     })
                 }
             );
@@ -75,19 +42,20 @@ boutonsReservation.forEach((bouton) => {
             const data = await response.json();
 
             if (!response.ok) {
-                throw new Error(data.message);
+                throw new Error(
+                    data.message || "Impossible de créer le paiement."
+                );
             }
 
             if (!data.checkoutUrl) {
-                throw new Error("Lien de paiement introuvable.");
+                throw new Error("Adresse de paiement introuvable.");
             }
 
             window.location.href = data.checkoutUrl;
 
         } catch (error) {
-            message.textContent =
-                error.message || "Une erreur est survenue.";
-
+            console.error("Erreur réservation :", error);
+            message.textContent = error.message;
             bouton.disabled = false;
         }
     });
