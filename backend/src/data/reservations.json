@@ -1,0 +1,68 @@
+[
+  {
+    "id": "091b8456-f2d8-4ade-8137-b4c3b84a9445",
+    "login": "admin",
+    "film": "Interstellar",
+    "nombrePlaces": 1,
+    "montant": 500,
+    "statut": "pending",
+    "qrToken": null,
+    "stripeSessionId": null,
+    "date": "2026-11-06T14:21:02.916Z"
+  },
+  {
+    "id": "9e102938-72ac-4b32-8162-fc3fa5ed28f9",
+    "login": "admin",
+    "film": "Interstellar",
+    "nombrePlaces": 1,
+    "montant": 500,
+    "statut": "pending",
+    "qrToken": null,
+    "stripeSessionId": "cs_test_a1WiFQKLYnlAImqP70apYcRG3VbLeAQ8c73UY7hafyiVOdNd2nDazP0qIO",
+    "date": "2026-11-06T14:31:24.345Z"
+  },
+  {
+    "id": "34980e6c-785b-4c9b-b4e5-bcd152095d79",
+    "login": "admin",
+    "film": "Interstellar",
+    "nombrePlaces": 1,
+    "montant": 500,
+    "statut": "pending",
+    "qrToken": null,
+    "stripeSessionId": "cs_test_a1EUr6ApwBgqHAYkTt9tN3RPkeDlm5gmksy6u9YHFuXFyCAV52RuROyrmQ",
+    "date": "2026-11-06T14:38:57.656Z"
+  },
+  {
+    "id": "7d4fcae6-6899-4c3f-94e6-fc2f8ebbd2e9",
+    "login": "admin",
+    "film": "Interstellar",
+    "nombrePlaces": 1,
+    "montant": 500,
+    "statut": "pending",
+    "qrToken": null,
+    "stripeSessionId": "cs_test_a17yQdXBxy2LOww3y5aLDdkgHDfVAuO4iCjDdGazlwvzmU6wEX3O0CheC7",
+    "date": "2026-11-06T14:41:27.537Z"
+  },
+  {
+    "id": "4ccb4c8d-5854-4972-964a-ed8430382e07",
+    "login": "admin",
+    "film": "Interstellar",
+    "nombrePlaces": 1,
+    "montant": 500,
+    "statut": "paid",
+    "qrToken": "a7f9ce1a-c31a-4380-bd12-f5349eebde4b",
+    "stripeSessionId": "cs_test_a1qSsBFKyRdeFASPctcvGyUQvrUuCxYl4bMLtvJUedpoRszOqe5foZpaNG",
+    "date": "2026-11-06T14:48:10.108Z"
+  },
+  {
+    "id": "ca5cacc7-feb8-47d8-a0a6-695a386ebffc",
+    "login": "admin",
+    "film": "Stargate, la porte des étoiles",
+    "nombrePlaces": 1,
+    "montant": 500,
+    "statut": "paid",
+    "qrToken": "5b6b0da5-79dd-4aa8-8126-d0f43ef0e479",
+    "stripeSessionId": "cs_test_a1QmAhSQZ4IXyaFSZMv7au8vJ6AcAI0uN9Qey6Iuduqt4IBEWjy6V3Lu3O",
+    "date": "2026-11-06T14:52:01.621Z"
+  }
+]
