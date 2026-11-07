@@ -4,31 +4,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Confirmation de réservation</title>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="styles/style.css" />
+    <title>Confirmation - Grand Cinéma</title>
+    <link rel="stylesheet" href="styles/style-paiement.css">
 </head>
-
 <body>
+
     <header>
         <h1>Grand Cinéma</h1>
-        <a href="reservations.html">Mes réservations</a>
+        <a href="films.html">Accueil</a>
     </header>
 
-    <main>
+    <main class="paiement-container">
+
         <h2>Confirmation de réservation</h2>
 
-        <p>Film sélectionné : <strong id="film"></strong></p>
-        <p>Votre réservation a été enregistrée.</p>
+        <p id="message-confirmation">
+            Vérification de votre paiement en cours...
+        </p>
 
-        <h3>Votre QR code</h3>
-        <div id="qrcode"></div>
-        <p>Présentez ce QR code à l'entrée du cinéma.</p>
+        <section id="details-reservation" hidden>
+            <h3 id="film"></h3>
 
-        <a href="films.html">Retour aux films</a>
+            <p id="nombre-places"></p>
+            <p id="montant"></p>
+            <p id="statut"></p>
+
+            <h3>Votre QR Code</h3>
+
+            <img id="qrcode" alt="QR Code de votre réservation">
+
+            <p>Présentez ce QR Code à la borne lors de votre arrivée.</p>
+        </section>
+
+        <a class="bouton" href="reservations.html">
+            Consulter mes réservations
+        </a>
+
     </main>
 
     <script src="scripts/script-confirmation.js"></script>
+
 </body>
 </html>

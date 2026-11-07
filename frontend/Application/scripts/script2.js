@@ -1,86 +1,94 @@
-
 const boutonsReservation = document.querySelectorAll(".reservation");
 
-// Récupérer les réservations enregistrées dans le navigateur
-function recupererReservations() {
-    return JSON.parse(localStorage.getItem("reservations")) || [];
-}
+const API_URL = "http://localhost:3000/api";
 
 boutonsReservation.forEach((bouton) => {
-    bouton.addEventListener("click", () => {
+    const carte = bouton.closest(".movie-card");
 
-        // Vérifier que l'utilisateur est connecté
+    // Création du choix du nombre de places
+    let select = carte.querySelector(".nombre-places");
+
+    if (!select) {
+        select = document.createElement("select");
+        select.className = "nombre-places";
+
+        for (let i = 1; i <= 10; i++) {
+            const option = document.createElement("option");
+            option.value = i;
+            option.textContent = `${i} place${i > 1 ? "s" : ""}`;
+            select.appendChild(option);
+        }
+
+        bouton.before(select);
+    }
+
+    const message = carte.querySelector(".message-reservation");
+
+    bouton.addEventListener("click", async () => {
         const login = sessionStorage.getItem("login");
 
         if (!login) {
-            alert("Vous devez être connecté pour réserver une séance.");
+            alert("Vous devez être connecté pour réserver.");
             window.location.href = "index.html";
             return;
         }
 
-        const carteFilm = bouton.closest(".movie-card");
-        const titreFilm = carteFilm
-            .querySelector(".movie-title")
+        const film = carte.querySelector(".movie-title")
             .textContent.trim();
 
-        const message = carteFilm.querySelector(".message-reservation");
+        const nombrePlaces = Number(select.value);
 
-        // Récupérer les réservations existantes
-        const reservations = recupererReservations();
-
-        // Vérifier si l'utilisateur a déjà réservé ce film
-        const dejaReserve = reservations.some((reservation) =>
-            reservation.login === login &&
-            reservation.film === titreFilm
-        );
-
-        if (dejaReserve) {
-            message.textContent =
-                "Vous avez déjà réservé cette séance.";
-            return;
-        }
-
-        // Récupérer le nombre de places disponibles
-        const textePlaces = carteFilm
-            .querySelector(".movie-places-disponibles")
-            .textContent;
+        const textePlaces = carte.querySelector(
+            ".movie-places-disponibles"
+        ).textContent;
 
         const placesDisponibles = parseInt(
             textePlaces.match(/\d+/)?.[0] ?? "0",
             10
         );
 
-        // Vérifier la disponibilité
-        if (placesDisponibles <= 0) {
+        if (nombrePlaces > placesDisponibles) {
             message.textContent =
-                "Impossible de réserver cette séance : il n'y a plus de places disponibles.";
+                "Le nombre de places demandé n'est pas disponible.";
             return;
         }
 
-        message.textContent = "";
+        bouton.disabled = true;
+        message.textContent = "Préparation du paiement...";
 
-        // Générer un identifiant pour la réservation
-        const reservationId = crypto.randomUUID();
+        try {
+            const response = await fetch(
+                `${API_URL}/paiements/checkout`,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        film,
+                        login,
+                        nombrePlaces
+                    })
+                }
+            );
 
-        // Enregistrer la réservation
-        reservations.push({
-            id: reservationId,
-            login: login,
-            film: titreFilm
-        });
+            const data = await response.json();
 
-        localStorage.setItem(
-            "reservations",
-            JSON.stringify(reservations)
-        );
+            if (!response.ok) {
+                throw new Error(data.message);
+            }
 
-        // Rediriger vers la confirmation
-        const params = new URLSearchParams({
-            film: titreFilm,
-            id: reservationId
-        });
+            if (!data.checkoutUrl) {
+                throw new Error("Lien de paiement introuvable.");
+            }
 
-        window.location.href =
-            `confirmation.html?${params.toString()}`;
+            window.location.href = data.checkoutUrl;
+
+        } catch (error) {
+            message.textContent =
+                error.message || "Une erreur est survenue.";
+
+            bouton.disabled = false;
+        }
     });
 });

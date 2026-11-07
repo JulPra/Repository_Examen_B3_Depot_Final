@@ -1,0 +1,75 @@
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f3f3f3;
+    color: #222;
+}
+
+header {
+    background-color: #222;
+    color: white;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header h1 {
+    margin: 0;
+}
+
+header a {
+    color: white;
+    text-decoration: none;
+}
+
+.paiement-container {
+    max-width: 650px;
+    margin: 50px auto;
+    padding: 30px;
+    background-color: white;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
+}
+
+.paiement-container h2 {
+    margin-bottom: 25px;
+}
+
+.paiement-container p {
+    line-height: 1.6;
+}
+
+#qrcode {
+    display: block;
+    width: 200px;
+    height: 200px;
+    margin: 20px auto;
+}
+
+.bouton {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 12px 22px;
+    background-color: #222;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.bouton:hover {
+    background-color: #444;
+}
+
+.nombre-places {
+    display: block;
+    margin: 12px 0;
+    padding: 8px;
+    border-radius: 5px;
+}

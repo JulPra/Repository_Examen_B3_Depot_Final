@@ -38,7 +38,7 @@ const liste = document.getElementById("liste-reservations");
                 liste.appendChild(carte);
 
                 new QRCode(qr, {
-                    text: JSON.stringify({
+                    text: reservation.qrToken || JSON.stringify({
                         id: reservation.id,
                         film: reservation.film
                     }),
