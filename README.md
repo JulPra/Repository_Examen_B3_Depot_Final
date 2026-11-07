@@ -10,3 +10,4 @@ numéro : 4242 (quatre fois)
 MM/AA : 1/30
 CVC : 123
 nom titulaire : Test
+la réservation est sauvegardée dans le fichier backend/src/data/reservations.json
